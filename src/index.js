@@ -23,6 +23,7 @@ ref.inputSearch.addEventListener('submit', (e) =>
         const { elements: { searchQuery } } = e.currentTarget;
         const str = (searchQuery.value).trim();
         if (str === '') return;
+        ref.divGallery.innerHTML = '';
         const prom = getImg(searchQuery.value, perPage);
         prom.then(value =>
         {
