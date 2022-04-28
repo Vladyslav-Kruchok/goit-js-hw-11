@@ -4,31 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Заголовок страницы</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/1.0.0/modern-normalize.min.css"
-      integrity="sha512-ISS7cAi1PEhQ8jnbJpJZMd29NlhNj4AWYyLOSp2CE/CsHxTCu+r+t0D2yoJudVrd0/8fTVPUVDzY5Tvli75u/g=="
-      crossorigin="anonymous"
-    />
+
+    <link rel="stylesheet" href="../src/sass/main.css">
   </head>
   <body>
-    <!--#region form of search img #-->
-    <section>
+    <header class="header container">
+      <!--#region form of search img #-->
       <include src="./partials/_search.html"></include>
-    </section>
-    <!--#endregion  #-->
-    
-    <!--#region gallery #-->
-    <section>
-      <div class="gallery">
-        <!-- Картки зображень -->
-      </div>
+      <!--#endregion  #-->
+    </header>
+
+    <section class="container">
+      <!--#region gallery #-->
+      <div class="gallery"></div>
       <!-- load-more -->
       <button type="button" class="load-more">Load more</button>
+      <!-- #endregion #-->
     </section>
-    <!-- #endregion #-->
-    
-    <!-- Скрипт идёт последним в разметке. В нём уже подключен главный SASS-файл. -->
+
     <script src="./index.js"></script>
   </body>
 </html>

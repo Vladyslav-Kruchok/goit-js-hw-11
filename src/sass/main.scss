@@ -1,7 +1,18 @@
-/*
- * Главный файл стилей.
- * Все паршалы подключаются сюда.
- */
+/*#region ----------UTILS---------- #*/
+@import './utils/vaiable';
+@import './utils/visually-hidden';
+/*#endregion #*/
 
-// Стили для файла с примером HTML-фрагмента
-@import './example';
+/*#region ----------BASE---------- #*/
+@import './base/common';
+/*#endregion #*/
+
+/*#region ----------COMPONETS---------- #*/
+@import './components/container';
+/*#endregion #*/
+
+/*#region ----------LAYOUT---------- #*/
+@import './layout/header';
+@import './layout/gallery';
+
+/*#endregion #*/
