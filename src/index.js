@@ -16,33 +16,48 @@ const IMAGE_PER_PAGE = Number(20);
 //#region Main
 const perPage = 40;
 let maxPage = 0;
-ref.btnLoadMore.classList.add('visually-hidden');
+let strRequest = '';
 ref.inputSearch.addEventListener('submit', (e) =>
     {
         e.preventDefault();
         const { elements: { searchQuery } } = e.currentTarget;
-        const str = (searchQuery.value).trim();
-        if (str === '') return;
+        strRequest = ((searchQuery.value).trim()).toLowerCase();
+        if (strRequest === '') return;
         ref.divGallery.innerHTML = '';
-        const prom = getImg(searchQuery.value, perPage);
-        prom.then(value =>
-        {
-            maxPage = Math.trunc(value.data.totalHits / perPage);
-            if (!value.data.total)
+        const prom = getImg(ref, strRequest, perPage);
+        prom
+            .then(value =>
             {
-                Notify.warning('Sorry, there are no images matching your search query. Please try again.');
-            }
-        });
-        ref.btnLoadMore.classList.remove('visually-hidden');
+                if (value != 'Error: Request failed with status code 400'
+                    || value != 'Error: Network Error at createError')
+                {
+                    if (!value.data.total)
+                    {
+                        Notify.warning('Sorry, there are no images matching your search query. Please try again.');
+                    }
+                    else
+                    {
+                        ref.btnLoadMore.classList.remove('visually-hidden');
+                        maxPage = Math.trunc(value.data.totalHits / perPage);
+                        Notify.success(`Hooray! We found ${value.data.totalHits} images.`);
+                    }
+                }
+                else {
+                    Notify.failure(value.message);
+                }
+                searchQuery.value = '';
+            })
+            .catch(err => {
+                Notify.failure(err.message);
+            });
+
     });
 ref.btnLoadMore.addEventListener('click', e =>
 {
     e.preventDefault();
-    const str = ref.inputSearch[0].value;
-    if (str === '') return;
     if (maxPage > 0)
     {
-        getImg(str, perPage, maxPage);
+        getImg(ref, strRequest, perPage, maxPage);
         maxPage--;
     }
     else

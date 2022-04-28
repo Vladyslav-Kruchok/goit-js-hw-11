@@ -4,7 +4,6 @@ import SimpleLightbox from "simplelightbox";
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 //#region Value
-const GALLERY = document.querySelector('.gallery');
 const URL = 
 {
     BASE_URL: 'https://pixabay.com/api/',
@@ -30,19 +29,18 @@ const paramType =
     page: 'page='
 };
 
-const axios = require('axios');
+import axios from 'axios';
 //#endregion
 
 //#region Func
-export const getImg = (searchValue, imgPerPage, page = 1) =>
+export const getImg = (ref, searchValue, imgPerPage, page = 1) =>
 {
     const fulllUrl =
         `${URL.BASE_URL}?${paramType.key + paramValue.API_KEY}&${paramType.search + searchValue}&${paramType.image_type + paramValue.image_type}&${paramType.orientation + paramValue.orientation}&${paramType.safesearch + paramValue.safesearch}&${paramType.perPage + imgPerPage}&${paramType.page + page}`;
 
     return axios.get(fulllUrl)
         .then(response => {
-            GALLERY.insertAdjacentHTML('beforeend', renderMurkup(response.data.hits));
-            return response;
+            ref.divGallery.insertAdjacentHTML('beforeend', renderMurkup(response.data.hits));
             //#region SimpleLightbox
             let gallery = new SimpleLightbox('.gallery a',
             {
@@ -52,9 +50,11 @@ export const getImg = (searchValue, imgPerPage, page = 1) =>
                 captionDelay: 250,
             });
             //#endregion #
+        return response;
         })
         .catch(err => {
             console.log(err);
+            return err;
         });
 }
 //#endregion
