@@ -28,6 +28,7 @@ ref.inputSearch.addEventListener('submit', (e) =>
         prom
             .then(value =>
             {
+                ref.btnLoadMore.classList.add('visually-hidden');
                 if (value != 'Error: Request failed with status code 400'
                     || value != 'Error: Network Error at createError')
                 {
